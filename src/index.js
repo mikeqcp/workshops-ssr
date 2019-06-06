@@ -66,25 +66,4 @@ const render = () => {
   ReactDOM.render(app, rootElement);
 };
 
-const initApp = async () => {
-  const detection = new UnsupportedBrowserDetection();
-  if (!detection.isSupported()) {
-    return;
-  }
-
-  // Chunked polyfill for browsers without Intl support
-  if (!window.Intl) {
-    new Promise(resolve => {
-      resolve(require('intl'));
-    })
-      .then(() => Promise.all([require('intl/locale-data/jsonp/en.js'), require('intl/locale-data/jsonp/pl.js')]))
-      .then(() => render())
-      .catch(err => {
-        throw err;
-      });
-  } else {
-    render();
-  }
-};
-
-initApp();
+render();
